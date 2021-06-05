@@ -15,6 +15,8 @@ namespace Catalog.Infrastructure.Persistence.EntityFramework
         public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options)
         { }
 
+        public DbSet<CategoryEntity> Categories { get;set;}
+        public DbSet<ProductEntity> Products { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

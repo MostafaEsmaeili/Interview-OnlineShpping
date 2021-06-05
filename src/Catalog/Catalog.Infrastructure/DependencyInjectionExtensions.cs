@@ -23,6 +23,7 @@ namespace Catalog.Infrastructure
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddHttpContextAccessor();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddTransient<IDateTime, DateTimeService>();
 
