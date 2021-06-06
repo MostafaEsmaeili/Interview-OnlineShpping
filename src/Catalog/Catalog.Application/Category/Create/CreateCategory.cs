@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace Catalog.Application.Category.Create
 {
     public record CreateCategory(CreateCategoryDto Model) : IRequest<bool>;
-    public class CreateOrUpdateCategoryHandler : IRequestHandler<CreateCategory, bool>
+    public class CreateCategoryHandler : IRequestHandler<CreateCategory, bool>
     {
         private readonly ICatalogDbContext _context;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateOrUpdateCategoryHandler(ICatalogDbContext context, IMapper mapper, IUnitOfWork unitOfWork)
+        public CreateCategoryHandler(ICatalogDbContext context, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _context = context;
             _mapper = mapper;
