@@ -1,5 +1,7 @@
 using Catalog.Application;
 using Catalog.Infrastructure;
+using Catalog.WebApi.Filters;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +23,17 @@ namespace Catalog.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllersWithViews(o =>
+            {
+            }).AddFluentValidation(fv =>
+            {
+                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = true;
+                fv.ImplicitlyValidateChildProperties = true;
+                fv.LocalizationEnabled = true;
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.WebApi", Version = "v1" });
@@ -29,19 +41,17 @@ namespace Catalog.WebApi
 
             services.AddApplication();
             services.AddInfrastructure();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.WebApi v1"));
-            }
+            app.UseMiddleware<ApiExceptionHandlingMiddleware>();
 
-            app.UseHttpsRedirection();
+            app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.WebApi v1"));
+
 
             app.UseRouting();
 

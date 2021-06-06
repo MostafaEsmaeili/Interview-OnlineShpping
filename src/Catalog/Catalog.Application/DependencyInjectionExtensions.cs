@@ -1,6 +1,7 @@
 ﻿using AutoMapper.EquivalencyExpression;
 using Catalog.Application.Common.behaviours;
 using Catalog.Application.Common.mapping;
+using Catalog.Application.Product.Create;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +20,10 @@ namespace Catalog.Application
             }, typeof(MappingProfile).Assembly);
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(typeof(CreateProduct).Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
             return services;
         }

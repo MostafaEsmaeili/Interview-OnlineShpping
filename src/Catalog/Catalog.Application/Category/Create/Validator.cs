@@ -8,23 +8,29 @@ using System.Threading.Tasks;
 
 namespace Catalog.Application.Category.Create
 {
-    public class Validator : AbstractValidator<CreateCategoryDto>
+    public class Validator : AbstractValidator<CreateCategory>
     {
         private readonly ICatalogDbContext _context;
         public Validator(ICatalogDbContext context)
         {
-            RuleFor(p => p.Name).NotEmpty();
-            When(x => x.ParentId is not null, () =>
+            _context = context;
+            RuleFor(p => p.Model).NotNull();
+            When(x => x.Model is not null, () =>
             {
-                RuleFor(x => x.ParentId).MustAsync(ShouldBeValidCategoryId);
+                RuleFor(p => p.Model.Name).NotEmpty().NotNull();
+                When(x => x.Model.ParentId is not null, () =>
+                {
+                    RuleFor(x => x.Model.ParentId).MustAsync(ShouldBeValidCategoryId);
+                });
+
 
             });
-            _context = context;
+
         }
 
         private async Task<bool> ShouldBeValidCategoryId(Guid? subId, CancellationToken cancellationToken)
         {
-            return await _context.Categories.AsNoTracking().AnyAsync(x=>x.Id == subId);
+            return await _context.Categories.AsNoTracking().AnyAsync(x => x.Id == subId);
         }
     }
 }//end namespace

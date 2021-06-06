@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Common.interfaces;
 using Catalog.Domain.entities;
+using Catalog.Infrastructure.Persistence.EntityFramework.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Threading;
@@ -50,6 +51,7 @@ namespace Catalog.Infrastructure.Persistence.EntityFramework
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
         }
 
     }

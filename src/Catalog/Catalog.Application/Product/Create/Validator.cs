@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace Catalog.Application.Product.Create
 {
-    public class Validator : AbstractValidator<CreateProductDto>
+    public class Validator : AbstractValidator<CreateProduct>
     {
         private readonly ICatalogDbContext _dbContext;
 
         public Validator(ICatalogDbContext dbContext)
         {
-            RuleFor(x=>x.Name).NotEmpty().NotNull().MaximumLength(128);
-            RuleFor(x=>x.Price).GreaterThanOrEqualTo(0);
-            RuleFor(x=>x.Description).NotNull().NotEmpty().MaximumLength(512);
-            RuleFor(x=>x.CategoryId).MustAsync(ShouldBeValidCategory);
+            RuleFor(x=>x.Model.Name).NotEmpty().NotNull().MaximumLength(128);
+            RuleFor(x=>x.Model.Price).GreaterThanOrEqualTo(0);
+            RuleFor(x=>x.Model.Description).NotNull().NotEmpty().MaximumLength(512);
+            RuleFor(x=>x.Model.CategoryId).MustAsync(ShouldBeValidCategory);
             _dbContext = dbContext;
         }
 

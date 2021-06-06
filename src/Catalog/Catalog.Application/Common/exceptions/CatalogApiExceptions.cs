@@ -2,7 +2,7 @@
 
 namespace Catalog.Application.Common.exceptions
 {
-    class CatalogApiExceptions : Exception
+    public class CatalogApiExceptions : Exception
     {
         public CatalogApiExceptions(string message) : base(message)
         {

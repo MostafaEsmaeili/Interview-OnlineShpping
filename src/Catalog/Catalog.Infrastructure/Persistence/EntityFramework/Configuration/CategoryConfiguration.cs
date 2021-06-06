@@ -1,4 +1,5 @@
 ﻿using Catalog.Domain.entities;
+using Catalog.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -20,6 +21,7 @@ namespace Catalog.Infrastructure.Persistence.EntityFramework.Configuration
             builder.Property(x=>x.Name).IsRequired().HasMaxLength(128);
             builder.Property(x => x.Description).IsRequired(false).HasMaxLength(512);
             builder.HasOne(x=>x.Parent).WithMany(x=>x.SubCategories).HasForeignKey(x=>x.ParentId).IsRequired(false);
+            builder.SetAuditConfiguration();
         }
     }
 }

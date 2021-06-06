@@ -10,7 +10,7 @@ namespace Catalog.Application.Category.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public bool Enable { get; set; }
+        public bool Enabled { get; set; }
         public Guid? ParentId { get; set; } = null;
     }
 }

@@ -13,6 +13,8 @@ namespace Catalog.Application.Common.mapping
             CreateMap<CategoryEntity, CategoryResponse>().ForMember(x=>x.ParentName, cfg=>cfg.MapFrom(m=>m.Parent.Name));
 
             CreateMap<CreateProductDto, ProductEntity>();
+            CreateMap<ProductEntity, ProductResponse>();
+
         }
     }
 }
