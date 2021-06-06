@@ -28,7 +28,7 @@ namespace Catalog.WebApi.Controllers
             return (await _mediator.Send(new CreateProduct(request))).ToJsonResult();
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductResponse>> CreateCategoryAsync(Guid id)
+        public async Task<ActionResult<ProductResponse>> GetProduct(Guid id)
         {
             return (await _mediator.Send(new GetProductById(id))).ToJsonResult();
         }
